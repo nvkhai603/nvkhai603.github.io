@@ -142,7 +142,7 @@
 </div>
         <div class="title-list">
     <form onkeydown="if(event.keyCode==13){return false;}">
-        <input class="search" type="text" placeholder="Search..." autocomplete="off"id="local-search-input" >
+        <input class="search" type="text" placeholder="Search All" autocomplete="off"id="local-search-input" >
         <i class="cross"></i>
         <span>
             <label for="tagswitch">Tags:</label>
@@ -160,6 +160,10 @@
 </div>
 
     
+    <div id="local-search-result">
+
+    </div>
+    
     <nav id="title-list-nav">
         
         <a  class=""
@@ -171,19 +175,19 @@
         </a>
         
         <a  class=""
-           href="/2019/11/22/mypost/"
-           data-tag="haha, cuocdoi, vay ha"
-           data-author="" >
-            <span class="post-title" title="mypost">mypost</span>
-            <span class="post-date" title="2019-11-22 01:24:48">2019/11/22</span>
-        </a>
-        
-        <a  class=""
            href="/2019/11/21/helloWord/"
            data-tag=""
            data-author="" >
             <span class="post-title" title="helloWord">helloWord</span>
             <span class="post-date" title="2019-11-21 23:38:55">2019/11/21</span>
+        </a>
+        
+        <a  class=""
+           href="/2019/11/22/mypost/"
+           data-tag="haha, cuocdoi, vay ha"
+           data-author="" >
+            <span class="post-title" title="mypost">mypost</span>
+            <span class="post-date" title="2019-11-22 01:24:48">2019/11/22</span>
         </a>
         
     </nav>
@@ -217,11 +221,7 @@
             <h1 id="Why-Blog"><a href="#Why-Blog" class="headerlink" title="Why Blog"></a>Why Blog</h1><p>adadadadadad<br>adadad<br>adadad<br>dadad</p>
 
         </article>
-        <!-- 
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-         -->
+        <!--  -->
         
     <div id="comments"></div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
@@ -264,24 +264,6 @@
 </div>
 <div class="acParent"></div>
 
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close"  onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
-            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
-        </div>
-    </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
-</div>
-
-
 </body>
 <script src="/js/jquery.pjax.js?v=1.0.1" ></script>
 
@@ -304,14 +286,6 @@
 
         /*渲染打赏样式*/
         
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
 
         /*高亮代码块行号*/
         
@@ -326,14 +300,28 @@
 
         
         
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
     }
 
     /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
-    }
     
 
 </script>
